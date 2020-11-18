@@ -27,9 +27,9 @@ public class Main {
 	    }
 
 	    /* Connexion à la base de données */
-	    String url = "jdbc:mysql://localhost:3306/bdd_sdzee";
-	    String utilisateur = "java";
-	    String motDePasse = "SdZ_eE";
+	    String url = "jdbc:mysql://localhost:3306/bdd_test";
+	    String utilisateur = "jerome";
+	    String motDePasse = "poulou";
 	    Connection connexion = null;
 	    Statement statement = null;
 	    ResultSet resultat = null;
