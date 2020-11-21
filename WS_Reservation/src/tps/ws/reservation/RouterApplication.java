@@ -4,7 +4,7 @@ import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
-public class Main extends Application{
+public class RouterApplication extends Application{
 	/**
 	 * Creates a root Restlet that will receive all incoming calls.
 	 */
@@ -18,4 +18,3 @@ public class Main extends Application{
 		return router;
 	}
 }
-

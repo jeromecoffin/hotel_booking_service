@@ -12,7 +12,7 @@
   <!-- Application class name -->
 	<context-param>
 		<param-name>org.restlet.application</param-name>
-		<param-value>tps.ws.reservation.Main</param-value>
+		<param-value>tps.ws.reservation.RouterApplication</param-value>
 	</context-param>
  
 	<!-- Restlet adapter -->
