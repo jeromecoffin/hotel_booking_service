@@ -13,8 +13,8 @@ public class Main extends Application{
 		// Create a router Restlet that routes each call to a new respective instance of resource.
 		Router router = new Router(getContext());
 		// Defines routes
-		router.attach("/filter/{date}/{nights}/{rooms}", Random.class);
-		router.attach("/reservation/{id}", Random.class);
+		router.attach("/search/{date}/{nights}/{rooms}", SearchAvailability.class);
+		router.attach("/reservation/{id}", AddReservation.class);
 		return router;
 	}
 }
