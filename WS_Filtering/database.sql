@@ -16,10 +16,18 @@ CREATE TABLE chambre (
 	date_max_av DATETIME NOT NULL,
 	
 	PRIMARY KEY(id)
-	FOREIGN KEY('hotel id') REFERENCES hotel(id)
+	FOREIGN KEY('hotel_id') REFERENCES hotel(id)
 )ENGINE=INNODB;
 
 CREATE TABLE reservations (
 	id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-
-)
+	room_id INT NOT NULL,
+	hotel_id INT NOT NULL,
+	date_debut DATETIME NOT NULL,
+	date_fin DATETIME NOT NULL,
+	
+	PRIMARY KEY(id)
+	FOREIGN KEY('room_id') references chambre(id)
+	FOREIGN KEY('hotel_id') references chambre(hotel_id)
+	
+)ENGINE=INNODB;
