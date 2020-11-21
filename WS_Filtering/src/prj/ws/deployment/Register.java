@@ -10,9 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
-public class Main {
+public class Register {
 	private List<String> messages = new ArrayList<String>();
 	
 	public List<String> executerTests( HttpServletRequest request ) {
@@ -43,21 +41,12 @@ public class Main {
 	        statement = connexion.createStatement();
 	        messages.add( "Objet requête créé !" );
 
-	        /* Select query execution */
-	        resultat = statement.executeQuery( "SELECT id, email, mot_de_passe, nom FROM Utilisateur;" );
-	        messages.add( "Requête \"SELECT id, email, mot_de_passe, nom FROM Utilisateur;\" effectuée !" );
+	        /* Insert query execution */
+	        int statut = statement.executeUpdate( "INSERT INTO Utilisateur (email, mot_de_passe, nom, date_inscription) VALUES ('jmarc@mail.fr', MD5('lavieestbelle78'), 'jean-marc', NOW());" );
 	 
-	        /* Getting data from query */
-	        while ( resultat.next() ) {
-	            int idUtilisateur = resultat.getInt( "id" );
-	            String emailUtilisateur = resultat.getString( "email" );
-	            String motDePasseUtilisateur = resultat.getString( "mot_de_passe" );
-	            String nomUtilisateur = resultat.getString( "nom" );
-	            /* Format data for JSP */
-	            messages.add( "Données retournées par la requête : id = " + idUtilisateur + ", email = " + emailUtilisateur
-	                    + ", motdepasse = "
-	                    + motDePasseUtilisateur + ", nom = " + nomUtilisateur + "." );
-	        }
+	        /* Formatage pour affichage dans la JSP finale. */
+	        messages.add( "Résultat de la requête d'insertion : " + statut + "." );
+	        
 	    } catch ( SQLException e ) {
 	        messages.add( "Erreur lors de la connexion : <br/>"
 	                + e.getMessage() );
