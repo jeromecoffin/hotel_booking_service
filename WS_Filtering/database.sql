@@ -16,7 +16,7 @@ CREATE TABLE chambre (
 	date_max_av DATETIME NOT NULL,
 	
 	PRIMARY KEY(id)
-	FOREIGN KEY('hotel_id') REFERENCES hotel(id)
+	FOREIGN KEY(hotel_id) REFERENCES hotel(id)
 )ENGINE=INNODB;
 
 CREATE TABLE reservations (
@@ -28,7 +28,7 @@ CREATE TABLE reservations (
 	nb_nights INT NOT NULL,
 	
 	PRIMARY KEY(id)
-	FOREIGN KEY('room_id') references chambre(id)
-	FOREIGN KEY('hotel_id') references chambre(hotel_id)
+	FOREIGN KEY(room_id) references chambre(id)
+	FOREIGN KEY(hotel_id) references chambre(hotel_id)
 	
 )ENGINE=INNODB;
