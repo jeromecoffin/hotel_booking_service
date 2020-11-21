@@ -2,6 +2,7 @@ package prj.ws.deployment;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,20 +31,21 @@ public class Availability {
 	    String utilisateur = "jerome";
 	    String motDePasse = "poulou";
 	    Connection connexion = null;
-	    Statement statement = null;
+	    PreparedStatement preparedStatement = null;
 	    ResultSet resultat = null;
 	    try {
 	        messages.add( "Connexion à la base de données..." );
 	        connexion = DriverManager.getConnection( url, utilisateur, motDePasse );
 	        messages.add( "Connexion réussie !" );
+	        
+	        /* Création de l'objet gérant les requêtes préparées */
+	        preparedStatement = connexion.prepareStatement( "SELECT id, email, mot_de_passe, nom FROM Utilisateur;" );
+	        messages.add( "Requête préparée créée !" );
 
-	        /* Query Object Creation */
-	        statement = connexion.createStatement();
-	        messages.add( "Objet requête créé !" );
-
-	        /* Select query execution */
-	        resultat = statement.executeQuery( "SELECT id, email, mot_de_passe, nom FROM Utilisateur;" );
+	        /* Exécution d'une requête de lecture */
+	        resultat = preparedStatement.executeQuery();
 	        messages.add( "Requête \"SELECT id, email, mot_de_passe, nom FROM Utilisateur;\" effectuée !" );
+
 	 
 	        /* Getting data from query */
 	        while ( resultat.next() ) {
@@ -67,10 +69,10 @@ public class Availability {
 	            } catch ( SQLException ignore ) {
 	            }
 	        }
-	        messages.add( "Fermeture de l'objet Statement." );
-	        if ( statement != null ) {
+	        messages.add( "Fermeture de l'objet PreparedStatement." );
+	        if ( preparedStatement != null ) {
 	            try {
-	                statement.close();
+	                preparedStatement.close();
 	            } catch ( SQLException ignore ) {
 	            }
 	        }

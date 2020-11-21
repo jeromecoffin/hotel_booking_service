@@ -2,6 +2,7 @@ package prj.ws.deployment;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,7 +31,7 @@ public class Register {
 	    String utilisateur = "jerome";
 	    String motDePasse = "poulou";
 	    Connection connexion = null;
-	    Statement statement = null;
+	    PreparedStatement preparedStatement = null;
 	    ResultSet resultat = null;
 	    try {
 	        messages.add( "Connexion à la base de données..." );
@@ -38,14 +39,21 @@ public class Register {
 	        messages.add( "Connexion réussie !" );
 
 	        /* Query Object Creation */
-	        statement = connexion.createStatement();
-	        messages.add( "Objet requête créé !" );
-
-	        /* Insert query execution */
-	        int statut = statement.executeUpdate( "INSERT INTO Utilisateur (email, mot_de_passe, nom, date_inscription) VALUES ('jmarc@mail.fr', MD5('lavieestbelle78'), 'jean-marc', NOW());" );
-	 
-	        /* Formatage pour affichage dans la JSP finale. */
-	        messages.add( "Résultat de la requête d'insertion : " + statut + "." );
+	        preparedStatement = connexion.prepareStatement( "INSERT INTO Utilisateur (email, mot_de_passe, nom, date_inscription) VALUES(?, MD5(?), ?, NOW());", Statement.RETURN_GENERATED_KEYS );
+	        messages.add( "Requête préparée créée !" );
+	        
+	        /* Récupération des paramètres d'URL saisis par l'utilisateur */
+	        String paramEmail = request.getParameter( "email" );
+	        String paramMotDePasse = request.getParameter( "motdepasse" );
+	        String paramNom = request.getParameter( "nom" );
+	        
+	        preparedStatement.setString( 1, paramEmail );
+	        preparedStatement.setString( 2, paramMotDePasse );
+	        preparedStatement.setString( 3, paramNom );
+	       
+	        int statut = preparedStatement.executeUpdate();
+	        
+	        messages.add( "Résultat de la requête d'insertion préparée : " + statut + "." );
 	        
 	    } catch ( SQLException e ) {
 	        messages.add( "Erreur lors de la connexion : <br/>"
@@ -58,10 +66,10 @@ public class Register {
 	            } catch ( SQLException ignore ) {
 	            }
 	        }
-	        messages.add( "Fermeture de l'objet Statement." );
-	        if ( statement != null ) {
+	        messages.add( "Fermeture de l'objet PreparedStatement." );
+	        if ( preparedStatement != null ) {
 	            try {
-	                statement.close();
+	                preparedStatement.close();
 	            } catch ( SQLException ignore ) {
 	            }
 	        }
