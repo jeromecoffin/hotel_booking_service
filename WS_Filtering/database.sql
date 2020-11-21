@@ -25,6 +25,7 @@ CREATE TABLE reservations (
 	hotel_id INT NOT NULL,
 	date_debut DATETIME NOT NULL,
 	date_fin DATETIME NOT NULL,
+	nb_nights INT NOT NULL,
 	
 	PRIMARY KEY(id)
 	FOREIGN KEY('room_id') references chambre(id)
