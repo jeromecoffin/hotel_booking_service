@@ -16,7 +16,8 @@ public class Main {
 	private List<String> messages = new ArrayList<String>();
 	
 	public List<String> executerTests( HttpServletRequest request ) {
-	    /* Chargement du driver JDBC pour MySQL */
+		
+	    /* Loading JDBC Driver for MySQL*/
 	    try {
 	        messages.add( "Chargement du driver..." );
 	        Class.forName( "com.mysql.jdbc.Driver" );
@@ -26,7 +27,7 @@ public class Main {
 	                + e.getMessage() );
 	    }
 
-	    /* Connexion à la base de données */
+	    /* Database connection */
 	    String url = "jdbc:mysql://localhost:3306/bdd_test";
 	    String utilisateur = "jerome";
 	    String motDePasse = "poulou";
@@ -38,21 +39,21 @@ public class Main {
 	        connexion = DriverManager.getConnection( url, utilisateur, motDePasse );
 	        messages.add( "Connexion réussie !" );
 
-	        /* Création de l'objet gérant les requêtes */
+	        /* Query Object Creation */
 	        statement = connexion.createStatement();
 	        messages.add( "Objet requête créé !" );
 
-	        /* Exécution d'une requête de lecture */
+	        /* Select query execution */
 	        resultat = statement.executeQuery( "SELECT id, email, mot_de_passe, nom FROM Utilisateur;" );
 	        messages.add( "Requête \"SELECT id, email, mot_de_passe, nom FROM Utilisateur;\" effectuée !" );
 	 
-	        /* Récupération des données du résultat de la requête de lecture */
+	        /* Getting data from query */
 	        while ( resultat.next() ) {
 	            int idUtilisateur = resultat.getInt( "id" );
 	            String emailUtilisateur = resultat.getString( "email" );
 	            String motDePasseUtilisateur = resultat.getString( "mot_de_passe" );
 	            String nomUtilisateur = resultat.getString( "nom" );
-	            /* Formatage des données pour affichage dans la JSP finale. */
+	            /* Format data for JSP */
 	            messages.add( "Données retournées par la requête : id = " + idUtilisateur + ", email = " + emailUtilisateur
 	                    + ", motdepasse = "
 	                    + motDePasseUtilisateur + ", nom = " + nomUtilisateur + "." );
