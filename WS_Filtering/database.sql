@@ -38,7 +38,7 @@ values (2, 'Mercure', 5);
 INSERT INTO hotel
 values (3, 'Le Meurice', 5);
 
-INSERT INTO chambre --chambres pour hotel IBIS
+INSERT INTO chambre
 values (1, 1, 101);
 INSERT INTO chambre
 values (2, 1, 102);
@@ -49,7 +49,7 @@ values (4, 1, 104);
 INSERT INTO chambre
 values (5, 1, 105);
 
-INSERT INTO chambre --chambres pour hotel Mercure
+INSERT INTO chambre
 values (6, 2, 201);
 INSERT INTO chambre
 values (7, 2, 202);
@@ -60,7 +60,7 @@ values (9, 2, 204);
 INSERT INTO chambre
 values (10, 2, 205);
 
-INSERT INTO chambre --chambres pour hotel Le Meurice
+INSERT INTO chambre 
 values (11, 3, 301);
 INSERT INTO chambre
 values (12, 3, 302);
@@ -71,11 +71,11 @@ values (14, 3, 304);
 INSERT INTO chambre
 values (15, 3, 305);
 
-INSERT INTO reservation --reservation IBIS
-values (1, 1, 1, '2020/11/21', '2020/11/30');
+INSERT INTO reservations
+values (1, 1, 1, '2020-11-21', '2020-11-30');
 
-INSERT INTO reservation --reservation Mercure
-values (2, 2, 2, '2020/12/1', '2020/12/25');
+INSERT INTO reservations
+values (2, 2, 2, '2020-12-1', '2020-12-25');
 
-INSERT INTO reservation --reservation Le Meurice
-values (3, 3, 3, '2020/12/26', '2020/12/31');
+INSERT INTO reservations
+values (3, 3, 3, '2020-12-26', '2020-12-31');
