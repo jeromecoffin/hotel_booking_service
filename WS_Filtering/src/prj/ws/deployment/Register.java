@@ -10,13 +10,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
-public class Main {
+public class Register {
 	private List<String> messages = new ArrayList<String>();
 	
 	public List<String> executerTests( HttpServletRequest request ) {
-	    /* Chargement du driver JDBC pour MySQL */
+		
+	    /* Loading JDBC Driver for MySQL*/
 	    try {
 	        messages.add( "Chargement du driver..." );
 	        Class.forName( "com.mysql.jdbc.Driver" );
@@ -26,7 +25,7 @@ public class Main {
 	                + e.getMessage() );
 	    }
 
-	    /* Connexion à la base de données */
+	    /* Database connection */
 	    String url = "jdbc:mysql://localhost:3306/bdd_test";
 	    String utilisateur = "jerome";
 	    String motDePasse = "poulou";
@@ -38,25 +37,16 @@ public class Main {
 	        connexion = DriverManager.getConnection( url, utilisateur, motDePasse );
 	        messages.add( "Connexion réussie !" );
 
-	        /* Création de l'objet gérant les requêtes */
+	        /* Query Object Creation */
 	        statement = connexion.createStatement();
 	        messages.add( "Objet requête créé !" );
 
-	        /* Exécution d'une requête de lecture */
-	        resultat = statement.executeQuery( "SELECT id, email, mot_de_passe, nom FROM Utilisateur;" );
-	        messages.add( "Requête \"SELECT id, email, mot_de_passe, nom FROM Utilisateur;\" effectuée !" );
+	        /* Insert query execution */
+	        int statut = statement.executeUpdate( "INSERT INTO Utilisateur (email, mot_de_passe, nom, date_inscription) VALUES ('jmarc@mail.fr', MD5('lavieestbelle78'), 'jean-marc', NOW());" );
 	 
-	        /* Récupération des données du résultat de la requête de lecture */
-	        while ( resultat.next() ) {
-	            int idUtilisateur = resultat.getInt( "id" );
-	            String emailUtilisateur = resultat.getString( "email" );
-	            String motDePasseUtilisateur = resultat.getString( "mot_de_passe" );
-	            String nomUtilisateur = resultat.getString( "nom" );
-	            /* Formatage des données pour affichage dans la JSP finale. */
-	            messages.add( "Données retournées par la requête : id = " + idUtilisateur + ", email = " + emailUtilisateur
-	                    + ", motdepasse = "
-	                    + motDePasseUtilisateur + ", nom = " + nomUtilisateur + "." );
-	        }
+	        /* Formatage pour affichage dans la JSP finale. */
+	        messages.add( "Résultat de la requête d'insertion : " + statut + "." );
+	        
 	    } catch ( SQLException e ) {
 	        messages.add( "Erreur lors de la connexion : <br/>"
 	                + e.getMessage() );
@@ -72,13 +62,6 @@ public class Main {
 	        if ( statement != null ) {
 	            try {
 	                statement.close();
-	            } catch ( SQLException ignore ) {
-	            }
-	        }
-	        messages.add( "Fermeture de l'objet Connection." );
-	        if ( connexion != null ) {
-	            try {
-	                connexion.close();
 	            } catch ( SQLException ignore ) {
 	            }
 	        }
