@@ -27,9 +27,9 @@ public class Availability {
 	    }
 
 	    /* Database connection */
-	    String url = "jdbc:mysql://localhost:3306/bdd_test";
-	    String utilisateur = "jerome";
-	    String motDePasse = "poulou";
+	    String url = "jdbc:mysql://localhost:3306/reservation_hotel";
+	    String utilisateur = "root";
+	    String motDePasse = "root";
 	    Connection connexion = null;
 	    PreparedStatement preparedStatement = null;
 	    ResultSet resultat = null;
@@ -39,7 +39,7 @@ public class Availability {
 	        messages.add( "Connexion réussie !" );
 	        
 	        /* Création de l'objet gérant les requêtes préparées */
-	        preparedStatement = connexion.prepareStatement( "SELECT id, email, mot_de_passe, nom FROM Utilisateur;" );
+	        preparedStatement = connexion.prepareStatement( "SELECT id, nom, nb_rooms_available FROM hotel;" );
 	        messages.add( "Requête préparée créée !" );
 
 	        /* Exécution d'une requête de lecture */
@@ -49,14 +49,14 @@ public class Availability {
 	 
 	        /* Getting data from query */
 	        while ( resultat.next() ) {
-	            int idUtilisateur = resultat.getInt( "id" );
-	            String emailUtilisateur = resultat.getString( "email" );
-	            String motDePasseUtilisateur = resultat.getString( "mot_de_passe" );
-	            String nomUtilisateur = resultat.getString( "nom" );
+	            int idHotel = resultat.getInt( "id" );
+	            String nomHotel = resultat.getString( "nom" );
+	            int nb_rooms_available = resultat.getString( "nb_rooms_available" );
+	            //String nomUtilisateur = resultat.getString( "nom" );
 	            /* Format data for JSP */
-	            messages.add( "Données retournées par la requête : id = " + idUtilisateur + ", email = " + emailUtilisateur
+	            messages.add( "Données retournées par la requête : id = " + idHotel + ", email = " + nomHotel
 	                    + ", motdepasse = "
-	                    + motDePasseUtilisateur + ", nom = " + nomUtilisateur + "." );
+	                    + nb_rooms_available + "." );
 	        }
 	    } catch ( SQLException e ) {
 	        messages.add( "Erreur lors de la connexion : <br/>"
