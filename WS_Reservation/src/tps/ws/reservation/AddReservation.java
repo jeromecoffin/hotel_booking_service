@@ -14,15 +14,20 @@ import java.net.URL;
 
 public class AddReservation extends ServerResource {
 	
-	public static void main(String[] args) {
+	public void main(String[] args) {
+		
+		String id = (String) getRequestAttributes().get("id");
+		String reservation = "?id="+id;
+		
 		try {
 
-	        URL url = new URL("http://localhost:8080/WS_Filtering/services/Register/executerTests");
+	        URL url = new URL("http://localhost:8080/WS_Filtering/services/Register/executerTests"+reservation);
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setDoOutput(true);
 	        conn.setRequestMethod("POST");
 	        conn.setRequestProperty("Content-Type", "application/json");
 
+	        //inserer donnee de requete precedente
 	        String input = "{\"id\":3}";
 
 	        OutputStream os = conn.getOutputStream();
