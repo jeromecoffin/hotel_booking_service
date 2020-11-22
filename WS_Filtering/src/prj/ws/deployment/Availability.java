@@ -12,6 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 public class Availability {
+	
 	private List<String> messages = new ArrayList<String>();
 	
 	public List<String> executerTests( HttpServletRequest request ) {
@@ -39,7 +40,7 @@ public class Availability {
 	        messages.add( "Connexion réussie !" );
 	        
 	        /* Création de l'objet gérant les requêtes préparées */
-	        preparedStatement = connexion.prepareStatement( "SELECT id, nom, nb_rooms_total, nb_rooms_available FROM hotel;" );
+	        preparedStatement = connexion.prepareStatement( "SELECT id FROM hotel WHERE id IN (SELECT hotel_id FROM reservations WHERE date_debut != '2020-11-21') AND nb_rooms_available > 6;");
 	        messages.add( "Requête préparée créée !" );
 
 	        /* Exécution d'une requête de lecture */

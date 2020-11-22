@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 public class GestionTestJDBC extends HttpServlet {
     public static final String ATT_MESSAGES = "messages";
     public static final String VUE          = "/WEB-INF/test_jdbc.jsp";
-
-    public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
+    	
+    public void doGet( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Availability test = new Availability();
         List<String> messages = test.executerTests( request );
 

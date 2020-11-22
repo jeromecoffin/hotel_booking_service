@@ -13,10 +13,17 @@ import java.net.URL;
 public class SearchAvailability extends ServerResource {
 
 	@Get
-	public static void main(String[] args) {
+	public void main(String[] args) {
+		
+		String date = (String) getRequestAttributes().get("date");
+		String nights = (String) getRequestAttributes().get("nights");
+		String rooms = (String) getRequestAttributes().get("rooms");
+		String search = "?date="+date+"&nights="+nights+"&rooms="+rooms;
+		System.out.println(search);
+				
 		try {
 
-	        URL url = new URL("http://localhost:8080/WS_Filtering/services/Availability/executerTests");
+	        URL url = new URL("http://localhost:8080/WS_Filtering/services/Availability/executerTests"+search);
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("GET");
 	        conn.setRequestProperty("Accept", "application/json");
