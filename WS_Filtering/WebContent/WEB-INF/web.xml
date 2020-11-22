@@ -37,14 +37,4 @@
     <servlet-name>AxisAdminServlet</servlet-name>
     <url-pattern>/axis2-admin/*</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>GestionTestJDBC</display-name>
-    <servlet-name>GestionTestJDBC</servlet-name>
-    <servlet-class>prj.ws.deployment.GestionTestJDBC</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>GestionTestJDBC</servlet-name>
-    <url-pattern>/GestionTestJDBC</url-pattern>
-  </servlet-mapping>
 </web-app>
