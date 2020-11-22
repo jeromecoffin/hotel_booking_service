@@ -5,17 +5,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 public class Availability {
 	
 	private List<String> messages = new ArrayList<String>();
 	
-	public List<String> executerTests( HttpServletRequest request ) {
+	public List<String> executerTests( String date, int nights, int rooms) {
 		
 	    /* Loading JDBC Driver for MySQL*/
 	    try {
@@ -40,7 +37,7 @@ public class Availability {
 	        messages.add( "Connexion réussie !" );
 	        
 	        /* Création de l'objet gérant les requêtes préparées */
-	        preparedStatement = connexion.prepareStatement( "SELECT id FROM hotel WHERE id IN (SELECT hotel_id FROM reservations WHERE date_debut != '2020-11-21') AND nb_rooms_available > 6;");
+	        preparedStatement = connexion.prepareStatement( "SELECT id FROM hotel WHERE id IN (SELECT hotel_id FROM reservations WHERE date_debut != '"+date+"') AND nb_rooms_available > "+rooms+";");
 	        messages.add( "Requête préparée créée !" );
 
 	        /* Exécution d'une requête de lecture */
