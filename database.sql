@@ -26,7 +26,7 @@ CREATE TABLE reservations (
 INSERT INTO hotel
 values (1, 'IBIS', 7, 3);
 INSERT INTO hotel
-values (2, 'Mercure', 8, 7);
+values (2, 'Mercure', 8, 5);
 INSERT INTO hotel
 values (3, 'Le Meurice', 10, 7);
 
