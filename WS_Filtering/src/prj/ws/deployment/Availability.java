@@ -39,24 +39,27 @@ public class Availability {
 	        messages.add( "Connexion réussie !" );
 	        
 	        /* Création de l'objet gérant les requêtes préparées */
-	        preparedStatement = connexion.prepareStatement( "SELECT id, nom, nb_rooms_available FROM hotel;" );
+	        preparedStatement = connexion.prepareStatement( "SELECT id, nom, nb_rooms_total, nb_rooms_available FROM hotel;" );
 	        messages.add( "Requête préparée créée !" );
 
 	        /* Exécution d'une requête de lecture */
 	        resultat = preparedStatement.executeQuery();
-	        messages.add( "Requête \"SELECT id, email, mot_de_passe, nom FROM Utilisateur;\" effectuée !" );
+	        //messages.add( "Requête \"SELECT id, email, mot_de_passe, nom FROM Utilisateur;\" effectuée !" );
 
 	 
 	        /* Getting data from query */
 	        while ( resultat.next() ) {
 	            int idHotel = resultat.getInt( "id" );
 	            String nomHotel = resultat.getString( "nom" );
+	            int nb_rooms_total = resultat.getInt("nb_rooms_total");
 	            int nb_rooms_available = resultat.getInt("nb_rooms_available" );
 	            //String nomUtilisateur = resultat.getString( "nom" );
 	            /* Format data for JSP */
 	            messages.add( "Données retournées par la requête : id = " + idHotel + ", email = " + nomHotel
-	                    + ", motdepasse = "
-	                    + nb_rooms_available + "." );
+	                    + ", nb rooms available = "
+	                    + nb_rooms_available 
+	                    + ", nb rooms total ="
+	                    + nb_rooms_total + "." );
 	        }
 	    } catch ( SQLException e ) {
 	        messages.add( "Erreur lors de la connexion : <br/>"
