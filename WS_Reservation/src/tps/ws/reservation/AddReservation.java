@@ -1,35 +1,60 @@
 package tps.ws.reservation;
 
-import org.restlet.data.Form;
-import org.restlet.data.MediaType;
-import org.restlet.representation.Representation;
-import org.restlet.representation.StringRepresentation;
-import org.restlet.resource.Get;
+
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class AddReservation extends ServerResource {
 	
-	@Get  
-	public String toString() {
-		String id = (String) getRequestAttributes().get("id");
-		return "Information about user \"" + id + "\" is: <nothing>";  
-	}
-	
-	@Post
-    public Representation acceptItem(Representation entity) {  
-		Representation result = null;  
-        // Parse the given representation and retrieve data
-        Form form = new Form(entity);  
-        String uid = form.getFirstValue("uid");  
- 
-        if(uid.equals("123")){ // Assume that user id 123 is existed
-        result = new StringRepresentation("User whose uid="+ uid +" is updated",  
-            MediaType.TEXT_PLAIN);
-        } 
+	public static void main(String[] args) {
+		try {
 
- 
-        return result;  
-    } 
+	        URL url = new URL("http://localhost:8080/WS_Filtering/services/Register/executerTests");
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setDoOutput(true);
+	        conn.setRequestMethod("POST");
+	        conn.setRequestProperty("Content-Type", "application/json");
+
+	        String input = "{\"id\":3}";
+
+	        OutputStream os = conn.getOutputStream();
+	        os.write(input.getBytes());
+	        os.flush();
+
+	        if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+	            throw new RuntimeException("Failed : HTTP error code : "
+	                + conn.getResponseCode());
+	        }
+
+	        BufferedReader br = new BufferedReader(new InputStreamReader(
+	                (conn.getInputStream())));
+
+	        String output;
+	        System.out.println("Output from Server .... \n");
+	        while ((output = br.readLine()) != null) {
+	            System.out.println(output);
+	        }
+
+	        conn.disconnect();
+
+	      } catch (MalformedURLException e) {
+
+	        e.printStackTrace();
+
+	      } catch (IOException e) {
+
+	        e.printStackTrace();
+
+	     }
+
+	    }
 } 
 
