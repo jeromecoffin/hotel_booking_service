@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 public class Register {
 	private List<String> messages = new ArrayList<String>();
 	
-	public List<String> executerTests( HttpServletRequest request ) {
+	public List<String> executerTests( int id, String date, int nights, int rooms ) {
 		
 	    /* Loading JDBC Driver for MySQL*/
 	    try {
@@ -42,14 +42,10 @@ public class Register {
 	        preparedStatement = connexion.prepareStatement( "INSERT INTO Utilisateur (email, mot_de_passe, nom, date_inscription) VALUES(?, MD5(?), ?, NOW());", Statement.RETURN_GENERATED_KEYS );
 	        messages.add( "Requête préparée créée !" );
 	        
-	        /* Récupération des paramètres d'URL saisis par l'utilisateur */
-	        String paramEmail = request.getParameter( "email" );
-	        String paramMotDePasse = request.getParameter( "motdepasse" );
-	        String paramNom = request.getParameter( "nom" );
-	        
-	        preparedStatement.setString( 1, paramEmail );
-	        preparedStatement.setString( 2, paramMotDePasse );
-	        preparedStatement.setString( 3, paramNom );
+	        preparedStatement.setInt( 1, id );
+	        preparedStatement.setString( 2, date );
+	        preparedStatement.setInt( 3, nights );
+	        preparedStatement.setInt( 4, rooms );
 	       
 	        int statut = preparedStatement.executeUpdate();
 	        

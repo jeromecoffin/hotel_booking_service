@@ -16,9 +16,9 @@ public class Availability {
 		
 	    /* Loading JDBC Driver for MySQL*/
 	    try {
-	        messages.add( "Chargement du driver..." );
+	        //messages.add( "Chargement du driver..." );
 	        Class.forName( "com.mysql.jdbc.Driver" );
-	        messages.add( "Driver chargé !" );
+	        //messages.add( "Driver chargé !" );
 	    } catch ( ClassNotFoundException e ) {
 	        messages.add( "Erreur lors du chargement : le driver n'a pas été trouvé dans le classpath ! <br/>"
 	                + e.getMessage() );
@@ -32,32 +32,22 @@ public class Availability {
 	    PreparedStatement preparedStatement = null;
 	    ResultSet resultat = null;
 	    try {
-	        messages.add( "Connexion à la base de données..." );
+	        //messages.add( "Connexion à la base de données..." );
 	        connexion = DriverManager.getConnection( url, utilisateur, motDePasse );
-	        messages.add( "Connexion réussie !" );
+	        //messages.add( "Connexion réussie !" );
 	        
 	        /* Création de l'objet gérant les requêtes préparées */
 	        preparedStatement = connexion.prepareStatement( "SELECT id FROM hotel WHERE id IN (SELECT hotel_id FROM reservations WHERE date_debut != '"+date+"') AND nb_rooms_available > "+rooms+";");
-	        messages.add( "Requête préparée créée !" );
+	        //messages.add( "Requête préparée créée !" );
 
 	        /* Exécution d'une requête de lecture */
 	        resultat = preparedStatement.executeQuery();
-	        //messages.add( "Requête \"SELECT id, email, mot_de_passe, nom FROM Utilisateur;\" effectuée !" );
-
 	 
 	        /* Getting data from query */
 	        while ( resultat.next() ) {
 	            int idHotel = resultat.getInt( "id" );
-	            String nomHotel = resultat.getString( "nom" );
-	            int nb_rooms_total = resultat.getInt("nb_rooms_total");
-	            int nb_rooms_available = resultat.getInt("nb_rooms_available" );
-	            //String nomUtilisateur = resultat.getString( "nom" );
 	            /* Format data for JSP */
-	            messages.add( "Données retournées par la requête : id = " + idHotel + ", hotel = " + nomHotel
-	                    + ", nb rooms available = "
-	                    + nb_rooms_available 
-	                    + ", nb rooms total ="
-	                    + nb_rooms_total + "." );
+	            messages.add( "id = " + idHotel + "." );
 	        }
 	    } catch ( SQLException e ) {
 	        messages.add( "Erreur lors de la connexion : <br/>"
