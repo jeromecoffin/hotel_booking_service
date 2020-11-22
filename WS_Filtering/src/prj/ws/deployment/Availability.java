@@ -51,7 +51,7 @@ public class Availability {
 	        while ( resultat.next() ) {
 	            int idHotel = resultat.getInt( "id" );
 	            String nomHotel = resultat.getString( "nom" );
-	            int nb_rooms_available = resultat.getString( "nb_rooms_available" );
+	            int nb_rooms_available = resultat.getInt("nb_rooms_available" );
 	            //String nomUtilisateur = resultat.getString( "nom" );
 	            /* Format data for JSP */
 	            messages.add( "Données retournées par la requête : id = " + idHotel + ", email = " + nomHotel
