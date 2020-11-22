@@ -55,7 +55,7 @@ public class Availability {
 	            int nb_rooms_available = resultat.getInt("nb_rooms_available" );
 	            //String nomUtilisateur = resultat.getString( "nom" );
 	            /* Format data for JSP */
-	            messages.add( "Données retournées par la requête : id = " + idHotel + ", email = " + nomHotel
+	            messages.add( "Données retournées par la requête : id = " + idHotel + ", hotel = " + nomHotel
 	                    + ", nb rooms available = "
 	                    + nb_rooms_available 
 	                    + ", nb rooms total ="
