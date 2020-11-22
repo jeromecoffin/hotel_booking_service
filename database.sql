@@ -19,7 +19,7 @@ CREATE TABLE reservations (
 	nb_rooms_reserved INT NOT NULL,
 	
 	PRIMARY KEY(id),
-	FOREIGN KEY(hotel_id) references chambre(hotel_id)
+	FOREIGN KEY(hotel_id) references hotel(id)
 	
 )ENGINE=INNODB;
 
@@ -32,10 +32,10 @@ values (3, 'Le Meurice', 10, 7);
 
 
 INSERT INTO reservations
-values (1, 1, 1, '2020-11-21', 1);
+values (1, 1, '2020-11-21', 1, 1);
 
 INSERT INTO reservations
-values (2, 2, 2, '2020-12-1', 3);
+values (2, 2, '2020-12-1', 2, 3);
 
 INSERT INTO reservations
-values (3, 3, 3, '2020-12-26', 5);
+values (3, 3, '2020-12-26', 3, 5);
