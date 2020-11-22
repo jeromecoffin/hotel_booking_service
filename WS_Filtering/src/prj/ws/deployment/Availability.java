@@ -28,8 +28,8 @@ public class Availability {
 
 	    /* Database connection */
 	    String url = "jdbc:mysql://localhost:3306/reservation_hotel";
-	    String utilisateur = "root";
-	    String motDePasse = "root";
+	    String utilisateur = "jerome";
+	    String motDePasse = "poulou";
 	    Connection connexion = null;
 	    PreparedStatement preparedStatement = null;
 	    ResultSet resultat = null;
