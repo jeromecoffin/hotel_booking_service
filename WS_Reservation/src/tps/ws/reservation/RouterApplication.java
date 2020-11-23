@@ -14,7 +14,7 @@ public class RouterApplication extends Application{
 		Router router = new Router(getContext());
 		// Defines routes
 		router.attach("/search/{date}/{nights}/{rooms}", SearchAvailability.class);
-		router.attach("/reservation/{id}", AddReservation.class);
+		router.attach("/reservation/{id}/{date}/{nights}/{rooms}", AddReservation.class);
 		return router;
 	}
 }

@@ -3,6 +3,7 @@ package client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -10,19 +11,25 @@ import java.net.URL;
 public class ClientCall {
 	
 	public static void main(String[] args) {
+		
+		String date="2020-11-21";
+		int nights=8;
+		int rooms=4;
+		int id=0;
+		
 		try {
-		URL url = new URL("http://localhost:8080/WS_Reservation/search/2020-11-21/8/6");
-	    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	    conn.setRequestMethod("GET");
-	    conn.setRequestProperty("Accept", "application/json");
+		URL urlSearch = new URL("http://localhost:8080/WS_Reservation/search/"+date+"/"+nights+"/"+rooms);
+	    HttpURLConnection connSearch = (HttpURLConnection) urlSearch.openConnection();
+	    connSearch.setRequestMethod("GET");
+	    connSearch.setRequestProperty("Accept", "application/json");
 	    
-	    if (conn.getResponseCode() != 200) {
+	    if (connSearch.getResponseCode() != 200) {
             throw new RuntimeException("Failed : HTTP error code : "
-                    + conn.getResponseCode());
+                    + connSearch.getResponseCode());
         }
 
         BufferedReader br = new BufferedReader(new InputStreamReader(
-            (conn.getInputStream())));
+            (connSearch.getInputStream())));
 
         String output;
         System.out.println("Output from Server .... \n");
@@ -30,7 +37,28 @@ public class ClientCall {
             System.out.println(output);
         }
         
-	    conn.disconnect();
+        connSearch.disconnect();
+        
+        URL urlResevation = new URL("http://localhost:8080/WS_Reservation/reservation"+id+"/"+date+"/"+nights+"/"+rooms);
+	    HttpURLConnection connReservation = (HttpURLConnection) urlResevation.openConnection();
+	    //connReservation.setDoOutput(true);
+	    //connReservation.setRequestMethod("POST");
+	    connReservation.setRequestMethod("GET");
+	    connReservation.setRequestProperty("Content-Type", "application/json");
+
+        //inserer donnee de requete precedente
+        //String input = "{\"id\":3}";
+
+        //OutputStream os = connReservation.getOutputStream();
+        //os.write(input.getBytes());
+        //os.flush();
+
+        if (connReservation.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+            throw new RuntimeException("Failed : HTTP error code : "
+                + connReservation.getResponseCode());
+        }
+        
+        connReservation.disconnect();
 	    
 		} catch (MalformedURLException e) {
 
