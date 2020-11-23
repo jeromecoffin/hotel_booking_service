@@ -27,7 +27,7 @@ public class Register {
 	    }
 
 	    /* Database connection */
-	    String url = "jdbc:mysql://localhost:3306/bdd_test";
+	    String url = "jdbc:mysql://localhost:3306/reservation_hotel";
 	    String utilisateur = "jerome";
 	    String motDePasse = "poulou";
 	    Connection connexion = null;
@@ -38,8 +38,8 @@ public class Register {
 	        connexion = DriverManager.getConnection( url, utilisateur, motDePasse );
 	        messages.add( "Connexion réussie !" );
 
-	        /* Query Object Creation */
-	        preparedStatement = connexion.prepareStatement( "INSERT INTO Utilisateur (email, mot_de_passe, nom, date_inscription) VALUES(?, MD5(?), ?, NOW());", Statement.RETURN_GENERATED_KEYS );
+	        //Query Object Creation 
+	        preparedStatement = connexion.prepareStatement( "INSERT INTO reservations (hotel_id, date_debut, nb_of_nights, nb_rooms_reserved) VALUES(?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS );
 	        messages.add( "Requête préparée créée !" );
 	        
 	        preparedStatement.setInt( 1, id );
@@ -66,6 +66,13 @@ public class Register {
 	        if ( preparedStatement != null ) {
 	            try {
 	                preparedStatement.close();
+	            } catch ( SQLException ignore ) {
+	            }
+	        }
+	        messages.add( "Fermeture de l'objet Connection." );
+	        if ( connexion != null ) {
+	            try {
+	                connexion.close();
 	            } catch ( SQLException ignore ) {
 	            }
 	        }

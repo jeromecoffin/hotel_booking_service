@@ -1,6 +1,11 @@
 package tps.ws.reservation;
 
 
+import org.restlet.data.Form;
+import org.restlet.data.MediaType;
+import org.restlet.representation.Representation;
+import org.restlet.representation.StringRepresentation;
+import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
@@ -11,39 +16,61 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddReservation extends ServerResource {
 	
-	public static void main(String[] args) {
+
+	@Post
+	public Representation main(Representation entity) {
+		
+		Representation result = null; 
+		
+		Form form = new Form(entity);  
+        String id = form.getFirstValue("id");  
+        String date = form.getFirstValue("date");
+        String nights = form.getFirstValue("nights");
+        String rooms = form.getFirstValue("rooms");
+		
+		String reservation = "?id="+id+"&date="+date+"&nights="+nights+"&rooms="+rooms;
+		
+		
+		
 		try {
 
-	        URL url = new URL("http://localhost:8080/WS_Filtering/services/Register/executerTests");
-	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	        conn.setDoOutput(true);
-	        conn.setRequestMethod("POST");
-	        conn.setRequestProperty("Content-Type", "application/json");
+		URL urlResevation = new URL("http://localhost:8080/WS_Filtering/services/Register/executerTests"+reservation);
+	    HttpURLConnection connReservation = (HttpURLConnection) urlResevation.openConnection();
+	    connReservation.setDoOutput(true);
+	    //connReservation.setRequestMethod("POST");
+	    //connReservation.setRequestProperty("Content-Type", "application/json");
+	    connReservation.setRequestProperty("Available", "application/json");
 
-	        String input = "{\"id\":3}";
+        //inserer donnee de requete precedente
+        //String input = "{\"id\":3}";
 
-	        OutputStream os = conn.getOutputStream();
-	        os.write(input.getBytes());
-	        os.flush();
+        //OutputStream os = connReservation.getOutputStream();
+        //os.write(input.getBytes());
+        //os.flush();
 
-	        if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-	            throw new RuntimeException("Failed : HTTP error code : "
-	                + conn.getResponseCode());
-	        }
+	    if (connReservation.getResponseCode() != 200) {
+            throw new RuntimeException("Failed : HTTP error code : "
+                + connReservation.getResponseCode());
+        }
+	    BufferedReader br = new BufferedReader(new InputStreamReader(
+	            (connReservation.getInputStream())));
 
-	        BufferedReader br = new BufferedReader(new InputStreamReader(
-	                (conn.getInputStream())));
-
-	        String output;
-	        System.out.println("Output from Server .... \n");
-	        while ((output = br.readLine()) != null) {
-	            System.out.println(output);
-	        }
-
-	        conn.disconnect();
+	    String output;
+	    String reservationn = "aaaaa";
+	    System.out.println("Output from Server .... \n");
+	    while ((output = br.readLine()) != null) {
+	        //System.out.println(output);
+	        reservationn = output;
+	    }
+	    result = new StringRepresentation("reservation"+reservationn,  
+	            MediaType.TEXT_PLAIN);
+	        
+        connReservation.disconnect();
 
 	      } catch (MalformedURLException e) {
 
@@ -52,8 +79,10 @@ public class AddReservation extends ServerResource {
 	      } catch (IOException e) {
 
 	        e.printStackTrace();
+	        
 
 	     }
+		return result;
 
 	    }
 } 
