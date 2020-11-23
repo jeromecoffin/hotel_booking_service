@@ -2,7 +2,9 @@ package tps.ws.reservation;
 
 
 import org.restlet.data.Form;
+import org.restlet.data.MediaType;
 import org.restlet.representation.Representation;
+import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
@@ -19,24 +21,26 @@ import java.util.List;
 
 public class AddReservation extends ServerResource {
 	
-	private List<String> messages = new ArrayList<String>();
 
 	@Post
-	public List<String> main(Representation entity) {
+	public Representation main(Representation entity) {
+		
+		Representation result = null; 
 		
 		Form form = new Form(entity);  
         String id = form.getFirstValue("id");  
         String date = form.getFirstValue("date");
-        messages.add(id);
-        messages.add(date);
+        String nights = form.getFirstValue("nights");
+        String rooms = form.getFirstValue("rooms");
 		
-		/*String date = (String) getRequestAttributes().get("date");
-		String reservation = "?date="+date;
-		messages.add(reservation);
+		String reservation = "?id="+id+"&date="+date+"&nights="+nights+"&rooms="+rooms;
 		
-		try {
+		result = new StringRepresentation("reservation"+reservation,  
+	            MediaType.TEXT_PLAIN);
+		
+		/*try {
 
-		URL urlResevation = new URL("http://localhost:8080/WS_Filtering/services/Availability/executerTests"+reservation);
+		URL urlResevation = new URL("http://localhost:8080/WS_Filtering/services/Register/executerTests"+reservation);
 	    HttpURLConnection connReservation = (HttpURLConnection) urlResevation.openConnection();
 	    //connReservation.setDoOutput(true);
 	    //connReservation.setRequestMethod("POST");
@@ -50,18 +54,18 @@ public class AddReservation extends ServerResource {
         //os.write(input.getBytes());
         //os.flush();
 
-        if (connReservation.getResponseCode() != 200) {
+	    if (connReservation.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
             throw new RuntimeException("Failed : HTTP error code : "
                 + connReservation.getResponseCode());
         }
         
-        BufferedReader brr = new BufferedReader(new InputStreamReader(
+        BufferedReader br = new BufferedReader(new InputStreamReader(
                 (connReservation.getInputStream())));
 
-            String outputt;
+            String output;
             System.out.println("Output from Server .... \n");
-            while ((outputt = brr.readLine()) != null) {
-                System.out.println(outputt);
+            while ((output = br.readLine()) != null) {
+                System.out.println(output);
             }
         
         connReservation.disconnect();
@@ -76,7 +80,7 @@ public class AddReservation extends ServerResource {
 	        
 
 	     }*/
-		return messages;
+		return result;
 
 	    }
 } 

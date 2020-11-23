@@ -43,6 +43,8 @@ public class ClientCall {
         
         connSearch.disconnect();
         
+        //TODO: mettre a jour les variables
+        
         ClientResource resource = new ClientResource("http://localhost:8080/WS_Reservation/reservation");  
         
 		Form form = new Form();  

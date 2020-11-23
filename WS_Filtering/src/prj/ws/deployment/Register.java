@@ -38,7 +38,7 @@ public class Register {
 	        connexion = DriverManager.getConnection( url, utilisateur, motDePasse );
 	        messages.add( "Connexion réussie !" );
 
-	        /* Query Object Creation */
+	        /* Query Object Creation 
 	        preparedStatement = connexion.prepareStatement( "INSERT INTO Utilisateur (email, mot_de_passe, nom, date_inscription) VALUES(?, MD5(?), ?, NOW());", Statement.RETURN_GENERATED_KEYS );
 	        messages.add( "Requête préparée créée !" );
 	        
@@ -50,7 +50,7 @@ public class Register {
 	        int statut = preparedStatement.executeUpdate();
 	        
 	        messages.add( "Résultat de la requête d'insertion préparée : " + statut + "." );
-	        
+	        */
 	    } catch ( SQLException e ) {
 	        messages.add( "Erreur lors de la connexion : <br/>"
 	                + e.getMessage() );
