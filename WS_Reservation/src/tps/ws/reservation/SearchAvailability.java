@@ -35,7 +35,7 @@ public class SearchAvailability extends ServerResource {
 
 	        URL url = new URL("http://localhost:8080/WS_Filtering/services/Availability/executerTests"+search);
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	        conn.setRequestMethod("GET");
+	        //conn.setRequestMethod("GET");
 	        conn.setRequestProperty("Accept", "application/json");
 
 	        if (conn.getResponseCode() != 200) {

@@ -48,8 +48,8 @@ public class ClientCall {
         ClientResource resource = new ClientResource("http://localhost:8080/WS_Reservation/reservation");  
         
 		Form form = new Form();  
-		form.add("id", "1234");  
-		form.add("date", "John");
+		form.add("id", "3");  
+		form.add("date", "2020-11-21");
 		form.add("nights", "8");
 		form.add("rooms", "2");
  

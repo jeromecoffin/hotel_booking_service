@@ -35,17 +35,16 @@ public class AddReservation extends ServerResource {
 		
 		String reservation = "?id="+id+"&date="+date+"&nights="+nights+"&rooms="+rooms;
 		
-		result = new StringRepresentation("reservation"+reservation,  
-	            MediaType.TEXT_PLAIN);
 		
-		/*try {
+		
+		try {
 
 		URL urlResevation = new URL("http://localhost:8080/WS_Filtering/services/Register/executerTests"+reservation);
 	    HttpURLConnection connReservation = (HttpURLConnection) urlResevation.openConnection();
-	    //connReservation.setDoOutput(true);
+	    connReservation.setDoOutput(true);
 	    //connReservation.setRequestMethod("POST");
-	    connReservation.setRequestMethod("GET");
-	    connReservation.setRequestProperty("Accept", "application/json");
+	    //connReservation.setRequestProperty("Content-Type", "application/json");
+	    connReservation.setRequestProperty("Available", "application/json");
 
         //inserer donnee de requete precedente
         //String input = "{\"id\":3}";
@@ -54,20 +53,23 @@ public class AddReservation extends ServerResource {
         //os.write(input.getBytes());
         //os.flush();
 
-	    if (connReservation.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+	    if (connReservation.getResponseCode() != 200) {
             throw new RuntimeException("Failed : HTTP error code : "
                 + connReservation.getResponseCode());
         }
-        
-        BufferedReader br = new BufferedReader(new InputStreamReader(
-                (connReservation.getInputStream())));
+	    BufferedReader br = new BufferedReader(new InputStreamReader(
+	            (connReservation.getInputStream())));
 
-            String output;
-            System.out.println("Output from Server .... \n");
-            while ((output = br.readLine()) != null) {
-                System.out.println(output);
-            }
-        
+	    String output;
+	    String reservationn = "aaaaa";
+	    System.out.println("Output from Server .... \n");
+	    while ((output = br.readLine()) != null) {
+	        //System.out.println(output);
+	        reservationn = output;
+	    }
+	    result = new StringRepresentation("reservation"+reservationn,  
+	            MediaType.TEXT_PLAIN);
+	        
         connReservation.disconnect();
 
 	      } catch (MalformedURLException e) {
@@ -79,7 +81,7 @@ public class AddReservation extends ServerResource {
 	        e.printStackTrace();
 	        
 
-	     }*/
+	     }
 		return result;
 
 	    }
