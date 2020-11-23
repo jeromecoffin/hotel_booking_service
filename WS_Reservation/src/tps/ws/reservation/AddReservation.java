@@ -42,16 +42,7 @@ public class AddReservation extends ServerResource {
 		URL urlResevation = new URL("http://localhost:8080/WS_Filtering/services/Register/executerTests"+reservation);
 	    HttpURLConnection connReservation = (HttpURLConnection) urlResevation.openConnection();
 	    connReservation.setDoOutput(true);
-	    //connReservation.setRequestMethod("POST");
-	    //connReservation.setRequestProperty("Content-Type", "application/json");
 	    connReservation.setRequestProperty("Available", "application/json");
-
-        //inserer donnee de requete precedente
-        //String input = "{\"id\":3}";
-
-        //OutputStream os = connReservation.getOutputStream();
-        //os.write(input.getBytes());
-        //os.flush();
 
 	    if (connReservation.getResponseCode() != 200) {
             throw new RuntimeException("Failed : HTTP error code : "

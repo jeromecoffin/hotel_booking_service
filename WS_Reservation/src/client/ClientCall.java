@@ -3,14 +3,12 @@ package client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.restlet.data.Form;
 import org.restlet.resource.ClientResource;
-import org.restlet.resource.ResourceException;
 
 public class ClientCall {
 	
@@ -19,7 +17,7 @@ public class ClientCall {
 		String date="2020-11-21";
 		int nights=8;
 		int rooms=4;
-		int id=0;
+		int id=3;
 		
 		try {
 		URL urlSearch = new URL("http://localhost:8080/WS_Reservation/search/"+date+"/"+nights+"/"+rooms);
@@ -43,15 +41,15 @@ public class ClientCall {
         
         connSearch.disconnect();
         
-        //TODO: mettre a jour les variables
+        //TODO: proposer une liste et mettre a jour les variables
         
         ClientResource resource = new ClientResource("http://localhost:8080/WS_Reservation/reservation");  
         
 		Form form = new Form();  
-		form.add("id", "3");  
-		form.add("date", "2020-11-21");
-		form.add("nights", "8");
-		form.add("rooms", "2");
+		form.add("id", Integer.toString(id));  
+		form.add("date", date);
+		form.add("nights", Integer.toString(nights));
+		form.add("rooms", Integer.toString(rooms));
  
 		resource.post(form).write(System.out);
  
