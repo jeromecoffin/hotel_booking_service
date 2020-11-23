@@ -39,12 +39,12 @@ public class ClientCall {
         
         connSearch.disconnect();
         
-        URL urlResevation = new URL("http://localhost:8080/WS_Reservation/reservation"+id+"/"+date+"/"+nights+"/"+rooms);
+        URL urlResevation = new URL("http://localhost:8080/WS_Reservation/reservation/"+id+"/"+date+"/"+nights+"/"+rooms);
 	    HttpURLConnection connReservation = (HttpURLConnection) urlResevation.openConnection();
 	    //connReservation.setDoOutput(true);
 	    //connReservation.setRequestMethod("POST");
 	    connReservation.setRequestMethod("GET");
-	    connReservation.setRequestProperty("Content-Type", "application/json");
+	    connReservation.setRequestProperty("Accept", "application/json");
 
         //inserer donnee de requete precedente
         //String input = "{\"id\":3}";
@@ -53,10 +53,19 @@ public class ClientCall {
         //os.write(input.getBytes());
         //os.flush();
 
-        if (connReservation.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+        if (connReservation.getResponseCode() != 200) {
             throw new RuntimeException("Failed : HTTP error code : "
                 + connReservation.getResponseCode());
         }
+        
+        BufferedReader brr = new BufferedReader(new InputStreamReader(
+                (connReservation.getInputStream())));
+
+            String outputt;
+            System.out.println("Output from Server .... \n");
+            while ((outputt = brr.readLine()) != null) {
+                System.out.println(outputt);
+            }
         
         connReservation.disconnect();
 	    

@@ -1,6 +1,8 @@
 package tps.ws.reservation;
 
 
+import org.restlet.representation.Representation;
+import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
@@ -11,33 +13,39 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddReservation extends ServerResource {
 	
-	public void main(String[] args) {
+	private List<String> messages = new ArrayList<String>();
+
+	@Get
+	public List<String> main(Representation entity) {
 		
-		String id = (String) getRequestAttributes().get("id");
-		String reservation = "?id="+id;
+		String date = (String) getRequestAttributes().get("date");
+		String reservation = "?date="+date;
+		messages.add(reservation);
 		
-		try {
+		/*try {
 
-	        URL url = new URL("http://localhost:8080/WS_Filtering/services/Register/executerTests"+reservation);
-	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	        conn.setDoOutput(true);
-	        conn.setRequestMethod("POST");
-	        conn.setRequestProperty("Content-Type", "application/json");
+			URL url = new URL("http://localhost:8080/WS_Filtering/services/Register/executerTests"+reservation);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setDoOutput(true);
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Content-Type", "application/json");
 
-	        //inserer donnee de requete precedente
-	        String input = "{\"id\":3}";
+	        inserer donnee de requete precedente
+			String input = "{\"id\":3}";
 
-	        OutputStream os = conn.getOutputStream();
-	        os.write(input.getBytes());
-	        os.flush();
+			OutputStream os = conn.getOutputStream();
+			os.write(input.getBytes());
+			os.flush();
 
-	        if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-	            throw new RuntimeException("Failed : HTTP error code : "
-	                + conn.getResponseCode());
-	        }
+			if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+			    throw new RuntimeException("Failed : HTTP error code : "
+			        + conn.getResponseCode());
+			}
 
 	        BufferedReader br = new BufferedReader(new InputStreamReader(
 	                (conn.getInputStream())));
@@ -58,7 +66,8 @@ public class AddReservation extends ServerResource {
 
 	        e.printStackTrace();
 
-	     }
+	     }*/
+		return messages;
 
 	    }
 } 
