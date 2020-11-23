@@ -8,6 +8,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.restlet.data.Form;
+import org.restlet.resource.ClientResource;
+import org.restlet.resource.ResourceException;
+
 public class ClientCall {
 	
 	public static void main(String[] args) {
@@ -39,35 +43,16 @@ public class ClientCall {
         
         connSearch.disconnect();
         
-        URL urlResevation = new URL("http://localhost:8080/WS_Reservation/reservation/"+id+"/"+date+"/"+nights+"/"+rooms);
-	    HttpURLConnection connReservation = (HttpURLConnection) urlResevation.openConnection();
-	    //connReservation.setDoOutput(true);
-	    //connReservation.setRequestMethod("POST");
-	    connReservation.setRequestMethod("GET");
-	    connReservation.setRequestProperty("Accept", "application/json");
-
-        //inserer donnee de requete precedente
-        //String input = "{\"id\":3}";
-
-        //OutputStream os = connReservation.getOutputStream();
-        //os.write(input.getBytes());
-        //os.flush();
-
-        if (connReservation.getResponseCode() != 200) {
-            throw new RuntimeException("Failed : HTTP error code : "
-                + connReservation.getResponseCode());
-        }
+        ClientResource resource = new ClientResource("http://localhost:8080/WS_Reservation/reservation");  
         
-        BufferedReader brr = new BufferedReader(new InputStreamReader(
-                (connReservation.getInputStream())));
-
-            String outputt;
-            System.out.println("Output from Server .... \n");
-            while ((outputt = brr.readLine()) != null) {
-                System.out.println(outputt);
-            }
-        
-        connReservation.disconnect();
+		Form form = new Form();  
+		form.add("id", "1234");  
+		form.add("date", "John");
+		form.add("nights", "8");
+		form.add("rooms", "2");
+ 
+		resource.post(form).write(System.out);
+ 
 	    
 		} catch (MalformedURLException e) {
 
