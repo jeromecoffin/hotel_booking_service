@@ -69,6 +69,13 @@ public class Register {
 	            } catch ( SQLException ignore ) {
 	            }
 	        }
+	        messages.add( "Fermeture de l'objet Connection." );
+	        if ( connexion != null ) {
+	            try {
+	                connexion.close();
+	            } catch ( SQLException ignore ) {
+	            }
+	        }
 	    }
 
 	    return messages;

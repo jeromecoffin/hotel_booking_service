@@ -1,5 +1,7 @@
 package tps.ws.reservation;
 
+import org.restlet.data.Form;
+import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 
@@ -13,17 +15,19 @@ import java.net.URL;
 public class SearchAvailability extends ServerResource {
 
 	@Get
-	public void main(String[] args) {
+	public void main(Representation entity) {
 		
-		String date = (String) getRequestAttributes().get("date");
-		String nights = (String) getRequestAttributes().get("nights");
-		String rooms = (String) getRequestAttributes().get("rooms");
-		String search = "?date="+date+"&nights="+nights+"&rooms="+rooms;
-		System.out.println(search);
 				
 		try {
+			Form form = new Form(entity);  
+	        String date = form.getFirstValue("date");
+	        String nights = form.getFirstValue("nights");
+	        String rooms = form.getFirstValue("rooms");
+	        
+	        System.out.println("Output "+date);
 
-	        URL url = new URL("http://localhost:8080/WS_Filtering/services/Availability/executerTests"+search);
+
+	        URL url = new URL("http://localhost:8080/WS_Filtering/services/Availability/executerTests"+"?date="+date+"&nights="+nights+"&rooms="+rooms);
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("GET");
 	        conn.setRequestProperty("Accept", "application/json");
